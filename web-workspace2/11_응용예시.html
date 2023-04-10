@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>응용예시</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        tbody > tr:hover{
+            cursor : pointer;
+            background-color : lightgray;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    
+    <h2>게시판 리스트</h2>
+
+    <br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회</th>
+                <th>좋아요</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>구룡포 주상절리</td>
+                <td>임재하 53 양산시</td>
+                <td>2023.03.29</td>
+                <td>32</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>일출암</td>
+                <td>임재하 53 양산시</td>
+                <td>2023.03.29</td>
+                <td>27</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>호미곶 유채꽃밭</td>
+                <td>임재하 53 양산시</td>
+                <td>2023.03.29</td>
+                <td>43</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>오천오어사</td>
+                <td>임재하 53 양산시</td>
+                <td>2023.03.29</td>
+                <td>30</td>
+                <td>4</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><br>
+
+    선택된 게시글 정보 :
+    <label id="l1">제목</label> /
+    <label id="l2">작성자</label> /
+    <label id="l3">작성일</label> /
+    <label id="l4">조회</label> /
+    <label id="l5">좋아요</label> /
+    
+
+
+    <script>
+        $(function(){
+            $('tbody>tr').click(function(){
+
+                /* 
+                $(this).children().eq(0).html();
+                $(this).children().eq(1).text();
+                $(this).children().eq(2).text();
+                $(this).children().eq(3).text();
+                $(this).children().eq(4).text();
+                console.dir($(this).children().eq(0).html());
+                
+                // 현재 선택된($(this))요소의 자식들 중에서
+                // 0 ~ 4번째 요소(<td>???</td>)의 innerText속성값을 가져오겠다.
+                
+                
+                $('#l1').html($(this).children().eq(0).html());
+                $('#l2').text($(this).children().eq(1).text());
+                $('#l3').text($(this).children().eq(2).text());
+                $('#l4').text($(this).children().eq(3).text());
+                $('#l5').html($(this).children().eq(4).html());
+                console.dir($('#l1'));
+                 */
+                
+
+                $(this).children().each(function(index, value){
+                    $('#l'+(index+1)).text($(value).text());
+                });
+
+
+
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!----------------------------------------------------------------------------------->
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <button>안녕 나는 버튼이야</button>
+
+    <button type="button" class="btn">Basic</button>
+    <button type="button" class="btn btn-primary">Primary</button>
+    <button type="button" class="btn btn-secondary">Secondary</button>
+    <button type="button" class="btn btn-success">Success</button>
+    <button type="button" class="btn btn-info">Info</button>
+    <button type="button" class="btn btn-warning">Warning</button>
+    <button type="button" class="btn btn-danger">Danger</button>
+    <button type="button" class="btn btn-dark">Dark</button>
+    <button type="button" class="btn btn-light">Light</button>
+    <button type="button" class="btn btn-link">Link</button> 
+    
+    <a href="" class="btn btn-primary">로그인</a>
+
+    <br>
+
+    <div class="container">
+        <h2>Modal Example</h2>
+        <!-- Button to Open the Modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+          Open modal
+        </button>
+      
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+            
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              
+              <!-- Modal body -->
+              <div class="modal-body">
+                Modal body..
+              </div>
+              
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+
+
+
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
