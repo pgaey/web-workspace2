@@ -1,5 +1,6 @@
 package com.kh.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.kh.board.model.service.BoardService;
+import com.kh.board.model.vo.Attachment;
+import com.kh.board.model.vo.Board;
 import com.kh.common.MyFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -79,8 +83,8 @@ public class BoardInsertController extends HttpServlet {
 			ServletContext application = session.getServletContext();
 			String savePath = application.getRealPath("/resources/board_upfiles/");
 			
-			System.out.println(maxSize);
-			System.out.println(savePath);
+			// System.out.println(maxSize);
+			// System.out.println(savePath);
 			
 			// 스텝 2) 서버에 업로드 작업(파일명 수정)
 			
@@ -117,14 +121,64 @@ public class BoardInsertController extends HttpServlet {
 			MultipartRequest multiRequest =
 					new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
+			//----------------------------------------------------------------------------------------------------------------------
+			
+			// 2) 값 뽑기 
+			// 카테고리번호, 제목, 내용, 회원번호 Board객체로 가공
+			String category = multiRequest.getParameter("category");
+			String title = multiRequest.getParameter("title");
+			String content = multiRequest.getParameter("content");
+			String userNo = multiRequest.getParameter("userNo");
+			
+			// 3) VO객체로 가공 => INSERT
+			Board b = new Board();
+			b.setCategory(category);
+			b.setBoardTitle(title);
+			b.setBoardContent(content);
+			b.setBoardWriter(userNo);
 			
 			
+			// 두 번째 INSERT => 선택적(첨부파일이 존재할 때만 INSERT)
+			Attachment at = null;
 			
+			// 첨부파일의 유무를 파악해야함!
+			
+			// multirequest.getOriginalFileName("키값");
+			// 첨부파일이 존재한다면 "원본파일명" / 첨부파일이 존재하지 않는다면 null값을  반환
+			if(multiRequest.getOriginalFileName("upfile") != null) {
+				
+				// 첨부파일이 있다 => VO객체로 가공
+				at = new Attachment();
+				at.setOriginName(multiRequest.getOriginalFileName("upfile"));
+				
+				// 수정된 파일명
+				// multiRequest.getFilesystemName("키값")
+				at.setChangeName(multiRequest.getFilesystemName("upfile"));
+				
+				// 파일경로
+				at.setFilePath("resources/board_upfiles");
+				
+			}
+			
+			// 4. 서비스 요청
+			int result = new BoardService().insertBoard(b, at);
+			
+			// 5. 응답페이지 지정
+			if(result > 0) { // 성공 -> list.bo?cpage=1
+				request.getSession().setAttribute("alertMsg", "게시글 작성 성공 ~ ");
+				response.sendRedirect(request.getContextPath() + "/list.bo?cpage=1");
+			} else { // 실패
+				// 만약 첨부파일이 있었는데 실패했다면 이미 업로드된 파일을 굳이 서버에서 보관할 필요 X
+				
+				if(at != null) {
+					// delete() 호출
+					new File(savePath + at.getChangeName()).delete();
+				}
+				
+				request.setAttribute("errorMsg", "게시글 작성 실패 ~ ");
+				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			}
 		}
-		
-		
-		
-		
 	}
 
 	/**

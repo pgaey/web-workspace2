@@ -15,13 +15,31 @@ public class Board {
 	private String status; // STATUS	VARCHAR2(1 BYTE)
 	private String category;
 	
+	private String titleImg;
 	
 	
 	
-	
-	
-	
-	
+	public Board(int boardNo, int boardType, int categoryNo, String boardTitle, String boardContent, String boardWriter,
+			int count, Date createDate, String status, String category, String titleImg) {
+		super();
+		this.boardNo = boardNo;
+		this.boardType = boardType;
+		this.categoryNo = categoryNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardWriter = boardWriter;
+		this.count = count;
+		this.createDate = createDate;
+		this.status = status;
+		this.category = category;
+		this.titleImg = titleImg;
+	}
+	public String getTitleImg() {
+		return titleImg;
+	}
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
+	}
 	
 	
 	
