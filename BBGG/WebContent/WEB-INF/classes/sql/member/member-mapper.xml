@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="loginMember">
+		SELECT
+		       MEMBER_NO
+		      ,ID
+		      ,PWD
+		      ,NICKNAME
+		      ,NAME
+		      ,EMAIL
+		      ,PHONE
+		      ,LOCATION
+		      ,BIRTH
+		      ,ENROLL_DATE
+		      ,STATUS_YN
+		      ,GRADE
+		      ,B_BTI
+		      ,B_MATE_YN
+		      ,ATTEND
+		  FROM
+		       MEMBER
+		 WHERE
+		       ID = ?
+		   AND
+		       PWD = ?
+		   AND
+		       STATUS_YN = 'Y'
+	</entry>
+
+
+	<!-- 회원가입 아이디 입력시 ajax로 중복검색 -->
+	<entry key="CheckId">
+		SELECT
+			   COUNT(*)
+		  FROM
+		  	   MEMBER
+		 WHERE
+		 	   ID = ?
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+
+	<entry key="insertUser">
+		INSERT
+		  INTO
+		  	   MEMBER
+		  	   (
+		  	   MEMBER_NO
+		  	  ,ID
+		  	  ,PWD
+		  	  ,NICKNAME
+		  	  ,NAME
+		  	  ,EMAIL
+		  	  ,PHONE
+		  	  ,LOCATION
+		  	  ,BIRTH
+		  	   )
+		VALUES
+			   (
+			   SEQ_MEMBER_NO.NEXTVAL
+			  ,?
+			  ,?
+			  ,?
+			  ,?
+			  ,?
+			  ,?
+			  ,?
+			  ,?
+			   )
+	</entry>
+	
+	<entry key="searchId">
+		SELECT
+			   ID
+		  FROM
+		  	   MEMBER
+		 WHERE
+		 	   NAME = ?
+		   AND
+		   	   EMAIL = ?
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+
+	<entry key="searchPwd">
+		SELECT
+			   PWD
+		  FROM
+		  	   MEMBER
+		 WHERE
+		 	   NAME = ?
+		   AND
+		   	   EMAIL = ?
+		   AND
+		   	   ID = ?
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+
+	<entry key="checkAtt">
+		SELECT
+			   ATTEND
+			  ,ATTEND_DATE
+		  FROM
+		  	   MEMBER
+		 WHERE
+		 	   MEMBER_NO = ?
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+
+	<entry key="afterAttend">
+		UPDATE
+			   MEMBER
+		   SET
+		   	   ATTEND_DATE = SYSDATE,
+		   	   ATTEND = ATTEND + 1
+		 WHERE
+		 	   MEMBER_NO = ?
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+
+	<entry key="countAtt">
+		SELECT
+			   ATTEND
+		  FROM
+		  	   MEMBER
+		 WHERE
+		 	   MEMBER_NO = ?
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+	
+	<entry key="sendCoupon">
+		INSERT
+		  INTO
+		  	   MESSAGE
+		  	   (
+		  	   MESSAGE_NO
+		  	  ,SENDER_NO
+		  	  ,RECIVER_NO
+		  	  ,TITLE
+		  	  ,CONTENT
+		  	  ,SEND_DATE
+		  	  ,READ_YN
+		  	  ,STATUS_YN
+		  	   )
+		VALUES
+		  	   (
+		  	   SEQ_MESSAGE_NO.NEXTVAL
+		  	  ,99999
+		  	  ,?
+		  	  ,'쿠폰 ~ '
+		  	  ,?
+		  	  ,DEFAULT
+		  	  ,DEFAULT
+		  	  ,DEFAULT
+		  	   )
+	</entry>
+
+	<entry key="resetAttend">
+		UPDATE 
+			   MEMBER
+		   SET
+		   	   ATTEND = 0
+		 WHERE
+		 	   MEMBER_NO = ?
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+	
+	
+	<!-- 여기부터 board에 넣어야할지도 -->
+	<entry key="countMyBoard">
+		SELECT
+			   COUNT(*)
+		  FROM
+		  	   BOARD
+		 WHERE
+		 	   MEMBER_NO = ?
+	  	   AND
+	           CATEGORY != 'R'
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+	
+	<entry key="countMyReview">
+		SELECT
+			   COUNT(*)
+		  FROM
+		  	   BOARD
+		 WHERE
+		 	   MEMBER_NO = ?
+		   AND
+	           CATEGORY = 'R'
+		   AND
+		   	   STATUS_YN = 'Y'
+	</entry>
+
+	<entry key="countUnReadMsg">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       MESSAGE
+		 WHERE
+		       RECIVER_NO = ?
+		   AND
+		       READ_YN = 'N'
+		   AND
+		       STATUS_YN = 'Y'
+	</entry>
+
+	<entry key="updateMember">
+		UPDATE
+			   MEMBER
+		   SET
+		   	   PWD = ?
+		   	  ,NICKNAME = ?
+		   	  ,EMAIL = ?
+		   	  ,PHONE = ?
+		   	  ,LOCATION = ?
+		 WHERE
+			   MEMBER_NO = ?		   	 
+		   
+	</entry>
+
+
+
+
+
+
+
+
+
+</properties>
+
+
+
